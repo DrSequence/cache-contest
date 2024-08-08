@@ -15,10 +15,18 @@ java {
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
+    implementation("org.ere.contest:order-starter:0.1.1")
+
     implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.data:spring-data-redis:3.3.2")
+    implementation("io.lettuce:lettuce-core:6.4.0.RELEASE")
+    implementation("com.fasterxml.jackson.core:jackson-databind")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 

@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: cf-redis-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    name: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+
+  liquibase:
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: postgres
+    change-log: classpath:db/changelog/changelog-master.xml
+    driver-class-name: org.postgresql.Driver
+
+  cache:
+    type: redis
+    cache-names: orders
+    redis:
+      key-prefix: "cf_"
+      cache-null-values: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      client-type: jedis
+      client-name: cf-redis-service
+
+
+server:
+  port: ${SERVER_PORT:8080}
