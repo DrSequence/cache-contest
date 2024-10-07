@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: postgres-db
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+  cf-db-service-1:
+    container_name: cf-db-service-1
+    image: ere/cf-db-service
+    environment:
+      SERVER_PORT: 8081
+      MANAGEMENT_PORT: 8084
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8081:8081"
+      - "8084:8084"
+    depends_on:
+      - prometheus
+      - postgres
+
+  cf-db-service-2:
+    container_name: cf-db-service-2
+    image: ere/cf-db-service
+    environment:
+      SERVER_PORT: 8082
+      MANAGEMENT_PORT: 8085
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8082:8082"
+      - "8085:8085"
+    depends_on:
+      - prometheus
+      - postgres
+
+  # your-microservice:
+  #   image: your-microservice-image
+  #   container_name: your-microservice
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - SERVER_PORT=8080
+  #     - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=prometheus
+  #     - SPRING_PROFILES_ACTIVE=prod
+  #   depends_on:
+  #     - prometheus
+
+volumes:
+  grafana_data:
+  postgres_data:

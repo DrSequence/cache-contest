@@ -7,6 +7,7 @@
 .cf-db-service/.gradle
 .cf-db-service/.idea
 .cf-db-service/build
+/bin
 # starter
 .order-starter/.gradle
 .order-starter/.idea

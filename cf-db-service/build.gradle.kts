@@ -29,6 +29,9 @@ dependencies {
     implementation("org.slf4j:slf4j-api")
     implementation("ch.qos.logback:logback-classic")
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("io.micrometer:micrometer-registry-prometheus")
+
     runtimeOnly("org.postgresql:postgresql")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

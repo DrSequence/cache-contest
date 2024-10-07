@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -42,8 +43,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(String orderId) {
         orderRepository.deleteById(UUID.fromString(orderId));
 
-        // clear cache
-        cacheManager.getCache(cacheName).evictIfPresent(orderId);
+        Objects.requireNonNull(cacheManager.getCache(cacheName)).evictIfPresent(orderId);
         var cachedEntity = cacheRepository.findById(cacheName);
         if (cachedEntity.isPresent()) {
             var updated = cachedEntity.get();
