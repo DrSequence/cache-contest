@@ -16,7 +16,7 @@ echo "prepare image..."
 
 echo "build image..."
 cat Dockerfile
-docker build -t ere/cf-db-service .
+sudo docker build -t ere/cf-db-service .
 cd ..
 pwd
 
