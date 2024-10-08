@@ -1,6 +1,13 @@
+# common starter
+echo "building common starter"
+cd order-starter
+./gradlew clean publishToMavenLocal 
+cd ..
+echo "build was finished!"
+
 echo "starting build all services..."
 
-# cofein cache service with postgres
+# coffein cache service with postgres
 echo "building cf-db services..."
 cd cf-db-service
 
@@ -15,5 +22,5 @@ pwd
 
 echo "done!"
 
-echo "building cf-kafka services..."
-# todo...
+# echo "building cf-kafka services..."
+# # todo...
